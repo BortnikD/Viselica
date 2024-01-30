@@ -1,7 +1,7 @@
 import tkinter  # для работы с визуализацией
-import time   # для плавной отрисовки различных фрагментов интерфейса, со временем будет удалена
-import json  # для преобразования данных из words.json
-import random  # ну какая игры без элементов случайности?)
+import time     # для плавной отрисовки различных фрагментов интерфейса, со временем будет удалена
+import json     # для преобразования данных из words.json
+import random   # ну какая игры без элементов случайности?)
 
 
 class Grafik(tkinter.Canvas):  # класс для основной отрисовки игры
@@ -9,7 +9,6 @@ class Grafik(tkinter.Canvas):  # класс для основной отрисо
         super().__init__(window, width=1080, height=1080, bg='skyblue')
         self.heart_image = tkinter.PhotoImage(file='hearts.png')  # картинка сердца, используется в create_health_scale
         self.hearts = []
-        #self.human = []
 
     def create_map(self):  # метод для создания карты, земля, солнце, виселица
         earth = self.create_rectangle(0, 880, 1080, 1080, fill='green')
@@ -75,6 +74,11 @@ class InputsDates(tkinter.Entry):  # класс для обработки вхо
     def __init__(self, window, letter=None):
         super().__init__(window, width=2, font=('Arial', 30), bg='lightgreen')
         self.letter = letter
+        self.bind('<KeyRelease>', self.only_one_char)
+
+    def only_one_char(self, event):
+        if len(self.get()) > 1:  # If more than one character is typed
+            self.delete(1, tkinter.END)  # Delete all extra characters
 
     def dates_get(self, event):  # получение данных из ввода в виджет
         self.letter = game_entry.get()[:1]  # берем только первый символ
